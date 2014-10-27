@@ -1,4 +1,2 @@
-tree_lib
+Tree Lib
 ========
-
-tree_lib
