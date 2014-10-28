@@ -7,6 +7,11 @@ BST<T>::BST() {
 }
 
 template<class T>
+BST<T>::BST(T*) {
+
+}
+
+template<class T>
 BST<T>::~BST() {
     if (this->_root != NULL)
         delete this->_root;
@@ -26,6 +31,12 @@ template<class T>
 bool BST<T>::remove(T value) {
     return this->_remove(this->_root, value);
 }
+
+template<class T>
+bool BST<T>::isBST() {
+    return this->_isBST(this->_root);
+};
+
 
 template<class T>
 void BST<T>::preOrder(void (*f)(T &value)){
@@ -70,11 +81,11 @@ void BST<T>::_insert(Node<T> *&node, T &value) {
 template<class T>
 bool BST<T>::_remove(Node<T> *node, T &value, Node<T> *parent) {
     bool ret = false;
-    if (node) {
+    if (node != NULL) {
         if (node->data == value) {
-            if (node->left && node->right) {
+            if (node->left != NULL && node->right != NULL) {
                 Node<T> *subNode = node->right;
-                while (subNode->left) {
+                while (subNode->left != NULL) {
                     subNode = subNode->left;
                 }
                 T tmpValue = node->data;
@@ -83,8 +94,8 @@ bool BST<T>::_remove(Node<T> *node, T &value, Node<T> *parent) {
                 ret = this->_remove(node->right, value, node);
             } else {
                 Node<T> *newNode = node->left;
-                if (node->right) newNode = node->right;
-                if (parent) {
+                if (node->right != NULL) newNode = node->right;
+                if (parent != NULL) {
                     if (parent->left == node)
                         parent->left = newNode;
                     else
@@ -107,10 +118,28 @@ bool BST<T>::_remove(Node<T> *node, T &value, Node<T> *parent) {
     }
     return ret;
 }
+template<class T>
+bool BST<T>::_isBST(Node<T> *node) {
+    bool ret = true;
+    if(node != NULL) {
+        if(node->left != NULL) {
+            ret = node->left->data < node->data;
+            if(ret)
+                ret = this->_isBST(node->left);
+        }
+        if(ret && node->right != NULL) {
+            ret = node->data < node->right->data;
+            if(ret)
+                ret = this->_isBST(node->right);
+        }
+    }
+    return ret;
+};
+
 
 template<class T>
 void BST<T>::_preOrder(Node<T>* node, void(*f)(T &value)) {
-    if(node) {
+    if(node != NULL) {
         f(node->data);
         this->_preOrder(node->left, f);
         this->_preOrder(node->right, f);
@@ -119,7 +148,7 @@ void BST<T>::_preOrder(Node<T>* node, void(*f)(T &value)) {
 
 template<class T>
 void BST<T>::_inOrder(Node<T>* node, void(*f)(T &value)) {
-    if(node) {
+    if(node != NULL) {
         this->_inOrder(node->left, f);
         f(node->data);
         this->_inOrder(node->right, f);
@@ -128,7 +157,7 @@ void BST<T>::_inOrder(Node<T>* node, void(*f)(T &value)) {
 
 template<class T>
 void BST<T>::_postOrder(Node<T>* node, void(*f)(T &value)) {
-    if(node) {
+    if(node != NULL) {
         this->_postOrder(node->left, f);
         this->_postOrder(node->right, f);
         f(node->data);

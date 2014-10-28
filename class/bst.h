@@ -26,11 +26,14 @@ class BST {
 
 public:
     BST();
+    BST(T*);
     ~BST();
 
     T *search(T value);
     void insert(T value);
     bool remove(T value);
+    bool isBST();
+
     void preOrder(void (*f)(T &value));
     void inOrder(void (*f)(T &value));
     void postOrder(void (*f)(T &value));
@@ -39,6 +42,7 @@ protected:
     T *_search(Node<T> *node, T &value);
     void _insert(Node<T> *&node, T &value);
     bool _remove(Node<T> *node, T &value, Node<T> *parent = NULL);
+    bool _isBST(Node<T> *node);
 
     void _preOrder(Node<T> *node, void (*f)(T &value));
     void _inOrder(Node<T> *node, void (*f)(T &value));
