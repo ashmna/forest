@@ -7,8 +7,8 @@ BST<T>::BST() {
 }
 
 template<class T>
-BST<T>::BST(T*) {
-
+BST<T>::BST(T* array, t_size length) {
+    this->_buildTreeFromSortedArray(this->_root, array, length);
 }
 
 template<class T>
@@ -162,4 +162,11 @@ void BST<T>::_postOrder(Node<T>* node, void(*f)(T &value)) {
         this->_postOrder(node->right, f);
         f(node->data);
     }
+};
+
+template<class T>
+void BST<T>::_buildTreeFromSortedArray(Node<T> *&node, T* array, t_size length ) {
+    t_size middle = length/2;
+    //node = new Node<T>(array[middle]);
+
 };
