@@ -26,7 +26,7 @@ class BST {
 
 public:
     BST();
-    BST(T* array, t_size length);
+    BST(T* array, size_t length);
     ~BST();
 
     T *search(T value);
@@ -47,6 +47,7 @@ protected:
     void _preOrder(Node<T> *node, void (*f)(T &value));
     void _inOrder(Node<T> *node, void (*f)(T &value));
     void _postOrder(Node<T> *node, void (*f)(T &value));
+    void _buildTreeFromSortedArray(Node<T> *&node, T array[], size_t start, size_t end);
 
     Node<T> *_root;
 };
