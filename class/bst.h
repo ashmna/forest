@@ -26,7 +26,7 @@ class BST {
 
 public:
     BST();
-    BST(T* array, size_t length);
+    BST(T array[], size_t length);
     ~BST();
 
     T *search(T value);
