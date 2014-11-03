@@ -4,7 +4,7 @@
 #include <stddef.h>
 
 
-template<class T>
+template<typename T>
 struct Node {
     T data;
     Node *left;
@@ -21,7 +21,7 @@ struct Node {
     }
 };
 
-template<class T>
+template<typename T>
 class BST {
 
 public:

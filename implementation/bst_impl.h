@@ -3,58 +3,58 @@
 
 //PUBLIC
 
-template<class T>
+template<typename T>
 BST<T>::BST() {
 }
 
-template<class T>
+template<typename T>
 BST<T>::BST(T array[], size_t length) {
     this->build_tree_from_sorted_array_(this->root_, array, 0, length-1);
 }
 
-template<class T>
+template<typename T>
 BST<T>::~BST() {
     if (this->root_ != NULL)
         delete this->root_;
 }
 
-template<class T>
+template<typename T>
 T *BST<T>::search(T value) {
     return this->search_(this->root_, value);
 }
 
-template<class T>
+template<typename T>
 void BST<T>::insert(T value) {
     this->insert_(this->root_, value);
 }
 
-template<class T>
+template<typename T>
 bool BST<T>::remove(T value) {
     return this->remove_(this->root_, value);
 }
 
-template<class T>
+template<typename T>
 bool BST<T>::is_bst() {
     return this->is_bst_(this->root_);
 };
 
 
-template<class T>
+template<typename T>
 void BST<T>::pre_order(void (*f)(T &value)){
     this->pre_order_(this->root_, f);
 };
 
-template<class T>
+template<typename T>
 void BST<T>::in_order(void (*f)(T &value)) {
     this->in_order_(this->root_, f);
 };
 
-template<class T>
+template<typename T>
 void BST<T>::post_order(void (*f)(T &value)){
     this->post_order_(this->root_, f);
 };
 
-template<class T>
+template<typename T>
 BST<T> *BST<T>::operator+(const BST<T> &tree) {
     BST<T> *bst = new BST<T>();
     bst->root_ = this->merge_(this->root_, tree.root_);
@@ -63,7 +63,7 @@ BST<T> *BST<T>::operator+(const BST<T> &tree) {
 
 //PROTECTED
 
-template<class T>
+template<typename T>
 T* BST<T>::search_(Node<T> *node, T &value) {
     if (node == NULL)
         return NULL;
@@ -75,7 +75,7 @@ T* BST<T>::search_(Node<T> *node, T &value) {
         return this->search_(node->left, value);
 }
 
-template<class T>
+template<typename T>
 void BST<T>::insert_(Node<T> *&node, T &value) {
     if (node == NULL) {
         node = new Node<T>(value);
@@ -86,7 +86,7 @@ void BST<T>::insert_(Node<T> *&node, T &value) {
     }
 };
 
-template<class T>
+template<typename T>
 bool BST<T>::remove_(Node<T> *node, T &value, Node<T> *parent) {
     bool ret = false;
     if (node != NULL) {
@@ -126,7 +126,7 @@ bool BST<T>::remove_(Node<T> *node, T &value, Node<T> *parent) {
     }
     return ret;
 }
-template<class T>
+template<typename T>
 bool BST<T>::is_bst_(Node<T> *node) {
     bool ret = true;
     if(node != NULL) {
@@ -145,7 +145,7 @@ bool BST<T>::is_bst_(Node<T> *node) {
 };
 
 
-template<class T>
+template<typename T>
 void BST<T>::pre_order_(Node<T>* node, void(*f)(T &value)) {
     if(node != NULL) {
         f(node->data);
@@ -154,7 +154,7 @@ void BST<T>::pre_order_(Node<T>* node, void(*f)(T &value)) {
     }
 };
 
-template<class T>
+template<typename T>
 void BST<T>::in_order_(Node<T>* node, void(*f)(T &value)) {
     if(node != NULL) {
         this->in_order_(node->left, f);
@@ -163,7 +163,7 @@ void BST<T>::in_order_(Node<T>* node, void(*f)(T &value)) {
     }
 };
 
-template<class T>
+template<typename T>
 void BST<T>::post_order_(Node<T>* node, void(*f)(T &value)) {
     if(node != NULL) {
         this->post_order_(node->left, f);
@@ -172,7 +172,7 @@ void BST<T>::post_order_(Node<T>* node, void(*f)(T &value)) {
     }
 };
 
-template<class T>
+template<typename T>
 void BST<T>::build_tree_from_sorted_array_(Node<T> *&node, T array[], size_t start, size_t end) {
     size_t middle = start + (end - start)/2;
     node = new Node<T>(array[middle]);
@@ -184,7 +184,7 @@ void BST<T>::build_tree_from_sorted_array_(Node<T> *&node, T array[], size_t sta
     }
 };
 
-template<class T>
+template<typename T>
 Node<T> *BST<T>::merge_(Node<T> *node_1, Node<T> *node_2) {
     if (node_1 == NULL) {
         return new Node<T>(*node_2);
