@@ -32,24 +32,27 @@ public:
     T *search(T value);
     void insert(T value);
     bool remove(T value);
-    bool isBST();
+    bool is_bst();
 
-    void preOrder(void (*f)(T &value));
-    void inOrder(void (*f)(T &value));
-    void postOrder(void (*f)(T &value));
+    void pre_order(void (*f)(T &value));
+    void in_order(void (*f)(T &value));
+    void post_order(void (*f)(T &value));
+
+    BST<T> *operator+(const BST<T> &tree);
 
 protected:
-    T *_search(Node<T> *node, T &value);
-    void _insert(Node<T> *&node, T &value);
-    bool _remove(Node<T> *node, T &value, Node<T> *parent = NULL);
-    bool _isBST(Node<T> *node);
+    T *search_(Node<T> *node, T &value);
+    void insert_(Node<T> *&node, T &value);
+    bool remove_(Node<T> *node, T &value, Node<T> *parent = NULL);
+    bool is_bst_(Node<T> *node);
 
-    void _preOrder(Node<T> *node, void (*f)(T &value));
-    void _inOrder(Node<T> *node, void (*f)(T &value));
-    void _postOrder(Node<T> *node, void (*f)(T &value));
-    void _buildTreeFromSortedArray(Node<T> *&node, T array[], size_t start, size_t end);
+    void pre_order_(Node<T> *node, void (*f)(T &value));
+    void in_order_(Node<T> *node, void (*f)(T &value));
+    void post_order_(Node<T> *node, void (*f)(T &value));
+    void build_tree_from_sorted_array_(Node<T> *&node, T array[], size_t start, size_t end);
+    Node<T> *merge_(Node<T> *node1, Node<T> *node2);
 
-    Node<T> *_root;
+    Node<T> *root_;
 };
 
 #include "../implementation/bst_impl.h"
