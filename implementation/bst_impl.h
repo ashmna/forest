@@ -61,7 +61,7 @@ BST<T> *BST<T>::operator+(const BST<T> &tree) {
     return bst;
 };
 
-//PRIVATE
+//PROTECTED
 
 template<class T>
 T* BST<T>::search_(Node<T> *node, T &value) {
