@@ -50,7 +50,7 @@ protected:
     void in_order_(Node<T> *node, void (*f)(T &value));
     void post_order_(Node<T> *node, void (*f)(T &value));
     void build_tree_from_sorted_array_(Node<T> *&node, T array[], size_t start, size_t end);
-    Node<T> *merge_(Node<T> *node1, Node<T> *node2);
+    Node<T> *merge_(Node<T> *node_1, Node<T> *node_2);
 
     Node<T> *root_;
 };
