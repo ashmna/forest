@@ -26,6 +26,10 @@ template <class T>
 class Splay {
 
 public:
+    Splay();
+    Splay(T array[], size_t length);
+    ~Splay();
+
     T *search(T value);
     void insert(T value);
     bool remove(T value);

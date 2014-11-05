@@ -2,19 +2,31 @@
 #include "../class/splay.h"
 
 //PUBLIC
+template<typename T>
+Splay<T>::Splay() {};
 
+template<typename T>
+Splay<T>::Splay(T array[], size_t length) {
 
-template<class T>
+};
+
+template<typename T>
+Splay<T>::~Splay() {
+    if (this->root_ != NULL)
+        delete this->root_;
+};
+
+template<typename T>
 T  *Splay<T>::search(T value) {
 
 };
 
-template<class T>
+template<typename T>
 void Splay<T>::insert(T value) {
 
 };
 
-template<class T>
+template<typename T>
 bool Splay<T>::remove(T value) {
 
 };
@@ -35,12 +47,12 @@ void Splay<T>::post_order(void (*f)(T &value)){
 };
 
 
-template<class T>
+template<typename T>
 Splay<T> *Splay<T>::operator+(const Splay<T> &tree) {
 
 };
 
-template<class T>
+template<typename T>
 Splay<T> *Splay<T>::operator-(const Splay<T> &tree) {
 
 };
