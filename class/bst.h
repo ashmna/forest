@@ -3,24 +3,6 @@
 
 #include <stddef.h>
 
-
-template<typename T>
-struct Node {
-    T data;
-    Node *left;
-    Node *right;
-
-    Node(T &value) : data(value) {}
-
-    ~Node() {
-        if (this->left != NULL)
-            delete this->left;
-        if (this->right != NULL)
-            delete this->right;
-        //delete this->data;
-    }
-};
-
 template<typename T>
 class BST {
 
@@ -41,6 +23,19 @@ public:
     BST<T> *operator+(const BST<T> &tree);
 
 protected:
+    struct Node {
+        T data;
+        Node *left;
+        Node *right;
+
+        Node(const T &value) : data(value), left(NULL), right(NULL) {}
+
+        ~Node() {
+            delete left;
+            delete right;
+        }
+    };
+
     T *search_(Node<T> *node, T &value);
     void insert_(Node<T> *&node, T &value);
     bool remove_(Node<T> *node, T &value, Node<T> *parent = NULL);
