@@ -33,8 +33,9 @@ protected:
         Node(T &value) : data(value), left(NULL), right(NULL), parent(NULL) {}
 
         ~Node() {
-            delete this->left;
-            delete this->right;
+            delete left;
+            delete right;
+            delete parent;
         }
     };
 
