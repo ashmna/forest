@@ -4,7 +4,7 @@
 //PUBLIC
 
 template<typename T>
-BST<T>::BST() {
+BST<T>::BST() : root_(NULL) {
 }
 
 template<typename T>
@@ -56,14 +56,14 @@ void BST<T>::post_order(void (*f)(T &value)){
 template<typename T>
 BST<T> *BST<T>::operator+(const BST<T> &tree) {
     BST<T> *bst = new BST<T>();
-    bst->root_ = merge_(root_, tree.root_);
+    merge_(bst->root_, root_, tree.root_);
     return bst;
 };
 
 //PROTECTED
 
 template<typename T>
-T* BST<T>::search_(Node<T> *node, T &value) {
+T* BST<T>::search_(Node *node, T &value) {
     if (node == NULL)
         return NULL;
     if (node->data == value)
@@ -75,9 +75,9 @@ T* BST<T>::search_(Node<T> *node, T &value) {
 }
 
 template<typename T>
-void BST<T>::insert_(Node<T> *&node, T &value) {
+void BST<T>::insert_(Node *&node, T &value) {
     if (node == NULL) {
-        node = new Node<T>(value);
+        node = new Node(value);
     } else if (value < node->data) {
         insert_(node->left, value);
     } else {
@@ -86,12 +86,12 @@ void BST<T>::insert_(Node<T> *&node, T &value) {
 };
 
 template<typename T>
-bool BST<T>::remove_(Node<T> *node, T &value, Node<T> *parent) {
+bool BST<T>::remove_(Node *node, T &value, Node *parent) {
     bool ret = false;
     if (node != NULL) {
         if (node->data == value) {
             if (node->left != NULL && node->right != NULL) {
-                Node<T> *sub_node = node->right;
+                Node *sub_node = node->right;
                 while (sub_node->left != NULL) {
                     sub_node = sub_node->left;
                 }
@@ -100,7 +100,7 @@ bool BST<T>::remove_(Node<T> *node, T &value, Node<T> *parent) {
                 sub_node->data = tmp_value;
                 ret = remove_(node->right, value, node);
             } else {
-                Node<T> *new_node = node->left;
+                Node *new_node = node->left;
                 if (node->right != NULL) new_node = node->right;
                 if (parent != NULL) {
                     if (parent->left == node)
@@ -126,7 +126,7 @@ bool BST<T>::remove_(Node<T> *node, T &value, Node<T> *parent) {
     return ret;
 }
 template<typename T>
-bool BST<T>::is_bst_(Node<T> *node) {
+bool BST<T>::is_bst_(Node *node) {
     bool ret = true;
     if(node != NULL) {
         if(node->left != NULL) {
@@ -145,7 +145,7 @@ bool BST<T>::is_bst_(Node<T> *node) {
 
 
 template<typename T>
-void BST<T>::pre_order_(Node<T>* node, void(*f)(T &value)) {
+void BST<T>::pre_order_(Node* node, void(*f)(T &value)) {
     if(node != NULL) {
         f(node->data);
         pre_order_(node->left, f);
@@ -154,7 +154,7 @@ void BST<T>::pre_order_(Node<T>* node, void(*f)(T &value)) {
 };
 
 template<typename T>
-void BST<T>::in_order_(Node<T>* node, void(*f)(T &value)) {
+void BST<T>::in_order_(Node* node, void(*f)(T &value)) {
     if(node != NULL) {
         in_order_(node->left, f);
         f(node->data);
@@ -163,7 +163,7 @@ void BST<T>::in_order_(Node<T>* node, void(*f)(T &value)) {
 };
 
 template<typename T>
-void BST<T>::post_order_(Node<T>* node, void(*f)(T &value)) {
+void BST<T>::post_order_(Node* node, void(*f)(T &value)) {
     if(node != NULL) {
         post_order_(node->left, f);
         post_order_(node->right, f);
@@ -172,9 +172,9 @@ void BST<T>::post_order_(Node<T>* node, void(*f)(T &value)) {
 };
 
 template<typename T>
-void BST<T>::build_tree_from_sorted_array_(Node<T> *&node, T array[], size_t start, size_t end) {
+void BST<T>::build_tree_from_sorted_array_(Node *&node, T array[], size_t start, size_t end) {
     size_t middle = start + (end - start)/2;
-    node = new Node<T>(array[middle]);
+    node = new Node(array[middle]);
     if(middle > start) {
         build_tree_from_sorted_array_(node->left, array, start, middle-1);
     }
@@ -184,16 +184,16 @@ void BST<T>::build_tree_from_sorted_array_(Node<T> *&node, T array[], size_t sta
 };
 
 template<typename T>
-Node<T> *BST<T>::merge_(Node<T> *node_1, Node<T> *node_2) {
+void BST<T>::merge_(Node *&node, Node *node_1, Node *node_2) {
     if (node_1 == NULL) {
-        return new Node<T>(*node_2);
+        node = new Node(*node_2);
+    } else if (node_2 == NULL) {
+        node = new Node(*node_1);
+    } else {
+        node = new Node(node_1->data);
+        if (node_1->left != NULL)
+            node->left = new Node(*node_1->left);
+        merge_(node->right, node_1->right, node_2);
     }
-    if (node_2 == NULL) {
-        return new Node<T>(*node_1);
-    }
-    Node<T> *node = new Node<T>(node_1->data);
-    if (node_1->left != NULL)
-        node->left = new Node<T>(*node_1->left);
-    node->right = merge_(node_1->right, node_2);
-    return node;
 };
+

@@ -23,7 +23,7 @@ public:
     BST<T> *operator+(const BST<T> &tree);
 
 protected:
-    struct Node {
+    struct Node{
         T data;
         Node *left;
         Node *right;
@@ -36,18 +36,18 @@ protected:
         }
     };
 
-    T *search_(Node<T> *node, T &value);
-    void insert_(Node<T> *&node, T &value);
-    bool remove_(Node<T> *node, T &value, Node<T> *parent = NULL);
-    bool is_bst_(Node<T> *node);
+    T *search_(Node *node, T &value);
+    void insert_(Node *&node, T &value);
+    bool remove_(Node *node, T &value, Node *parent = NULL);
+    bool is_bst_(Node *node);
 
-    void pre_order_(Node<T> *node, void (*f)(T &value));
-    void in_order_(Node<T> *node, void (*f)(T &value));
-    void post_order_(Node<T> *node, void (*f)(T &value));
-    void build_tree_from_sorted_array_(Node<T> *&node, T array[], size_t start, size_t end);
-    Node<T> *merge_(Node<T> *node_1, Node<T> *node_2);
+    void pre_order_(Node *node, void (*f)(T &value));
+    void in_order_(Node *node, void (*f)(T &value));
+    void post_order_(Node *node, void (*f)(T &value));
+    void build_tree_from_sorted_array_(Node *&node, T array[], size_t start, size_t end);
+    void merge_(Node *&node, Node *node_1, Node *node_2);
 
-    Node<T> *root_;
+    Node *root_;
 };
 
 #include "../implementation/bst_impl.h"
