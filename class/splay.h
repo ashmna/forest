@@ -4,24 +4,6 @@
 #include <stddef.h>
 
 
-template<class T>
-struct Node {
-    T data;
-    Node *left;
-    Node *right;
-
-    Node(T &value) : data(value) {}
-
-    ~Node() {
-        if (this->left != NULL)
-            delete this->left;
-        if (this->right != NULL)
-            delete this->right;
-    }
-};
-
-
-
 template <class T>
 class Splay {
 
@@ -42,20 +24,34 @@ public:
     Splay<T> *operator-(const Splay<T> &tree);
 
 protected:
-    void splay_(Node<T> node);
+    struct Node {
+        T data;
+        Node *left;
+        Node *right;
+        Node *parent;
 
-    T *search_(Node<T> *node, T &value);
-    void insert_(Node<T> *&node, T &value);
-    bool remove_(Node<T> *&node, T &value, Node<T> *parent = NULL);
+        Node(T &value) : data(value), left(NULL), right(NULL), parent(NULL) {}
 
-    void pre_order_(Node<T> *node, void (*f)(T &value));
-    void in_order_(Node<T> *node, void (*f)(T &value));
-    void post_order_(Node<T> *node, void (*f)(T &value));
+        ~Node() {
+            delete this->left;
+            delete this->right;
+        }
+    };
 
-    Node<T> *merge_(Node<T> *node_1, Node<T> *node_2);
-    Node<T> *split_(Node<T> *node_1, Node<T> *node_2);
+    void splay_(Node node);
 
-    Node<T> *root_;
+    T *search_(Node *node, T &value);
+    void insert_(Node *&node, T &value);
+    bool remove_(Node *&node, T &value, Node *parent = NULL);
+
+    void pre_order_(Node *node, void (*f)(T &value));
+    void in_order_(Node *node, void (*f)(T &value));
+    void post_order_(Node *node, void (*f)(T &value));
+
+    void merge_(Node *&node, Node *node_1, Node *node_2);
+    void split_(Node *&node, Node *node_1, Node *node_2);
+
+    Node *root_;
 
 };
 
