@@ -18,7 +18,7 @@ BST<T>::~BST() {
 }
 
 template<typename T>
-T *BST<T>::search(T value) {
+T *BST<T>::search(T value) const {
     return search_(root_, value);
 }
 
@@ -33,23 +33,23 @@ bool BST<T>::remove(T value) {
 }
 
 template<typename T>
-bool BST<T>::is_bst() {
+bool BST<T>::is_bst() const {
     return is_bst_(root_);
 };
 
 
 template<typename T>
-void BST<T>::pre_order(void (*f)(T &value)){
+void BST<T>::pre_order(void (*f)(T &value)) const {
     pre_order_(root_, f);
 };
 
 template<typename T>
-void BST<T>::in_order(void (*f)(T &value)) {
+void BST<T>::in_order(void (*f)(T &value)) const {
     in_order_(root_, f);
 };
 
 template<typename T>
-void BST<T>::post_order(void (*f)(T &value)){
+void BST<T>::post_order(void (*f)(T &value)) const {
     post_order_(root_, f);
 };
 
@@ -63,7 +63,7 @@ BST<T> *BST<T>::operator+(const BST<T> &tree) {
 //PROTECTED
 
 template<typename T>
-T* BST<T>::search_(Node *node, T &value) {
+T* BST<T>::search_(Node *node, T &value) const {
     if (node == NULL)
         return NULL;
     if (node->data == value)
@@ -126,7 +126,7 @@ bool BST<T>::remove_(Node *node, T &value, Node *parent) {
     return ret;
 }
 template<typename T>
-bool BST<T>::is_bst_(Node *node) {
+bool BST<T>::is_bst_(Node *node) const {
     bool ret = true;
     if(node != NULL) {
         if(node->left != NULL) {
@@ -145,7 +145,7 @@ bool BST<T>::is_bst_(Node *node) {
 
 
 template<typename T>
-void BST<T>::pre_order_(Node* node, void(*f)(T &value)) {
+void BST<T>::pre_order_(Node* node, void(*f)(T &value)) const {
     if(node != NULL) {
         f(node->data);
         pre_order_(node->left, f);
@@ -154,7 +154,7 @@ void BST<T>::pre_order_(Node* node, void(*f)(T &value)) {
 };
 
 template<typename T>
-void BST<T>::in_order_(Node* node, void(*f)(T &value)) {
+void BST<T>::in_order_(Node* node, void(*f)(T &value)) const {
     if(node != NULL) {
         in_order_(node->left, f);
         f(node->data);
@@ -163,7 +163,7 @@ void BST<T>::in_order_(Node* node, void(*f)(T &value)) {
 };
 
 template<typename T>
-void BST<T>::post_order_(Node* node, void(*f)(T &value)) {
+void BST<T>::post_order_(Node* node, void(*f)(T &value)) const {
     if(node != NULL) {
         post_order_(node->left, f);
         post_order_(node->right, f);
