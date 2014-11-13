@@ -61,6 +61,20 @@ BST<T> *BST<T>::operator+(const BST<T> &tree) {
 };
 
 //PROTECTED
+template<typename T>
+struct BST<T>::Node {
+    T data;
+    Node *left;
+    Node *right;
+
+    Node(const T &value) : data(value), left(NULL), right(NULL) {
+    }
+
+    ~Node() {
+        delete left;
+        delete right;
+    }
+};
 
 template<typename T>
 T* BST<T>::search_(Node *node, T &value) const {

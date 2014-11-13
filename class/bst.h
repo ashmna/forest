@@ -23,18 +23,7 @@ public:
     BST<T> *operator+(const BST<T> &tree);
 
 protected:
-    struct Node{
-        T data;
-        Node *left;
-        Node *right;
-
-        Node(const T &value) : data(value), left(NULL), right(NULL) {}
-
-        ~Node() {
-            delete left;
-            delete right;
-        }
-    };
+    struct Node;
 
     T *search_(Node *node, T &value) const;
     void insert_(Node *&node, T &value);
