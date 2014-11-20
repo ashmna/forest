@@ -24,20 +24,7 @@ public:
     Splay<T> *operator-(const Splay<T> &tree);
 
 protected:
-    struct Node {
-        T data;
-        Node *left;
-        Node *right;
-        Node *parent;
-
-        Node(T &value) : data(value), left(NULL), right(NULL), parent(NULL) {}
-
-        ~Node() {
-            delete left;
-            delete right;
-            delete parent;
-        }
-    };
+    struct Node;
 
     void splay_(Node *node);
 
