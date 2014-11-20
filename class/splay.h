@@ -36,8 +36,7 @@ protected:
     void in_order_(Node *node, void (*f)(T &value)) const;
     void post_order_(Node *node, void (*f)(T &value)) const;
 
-    void left_rotate_(Node *x, Node *p);
-    void right_rotate_(Node *x, Node *p);
+    void rotate_(Node *x);
 
     void merge_(Node *&node, Node *node_1, Node *node_2);
     void split_(Node *&node, Node *node_1, Node *node_2);
