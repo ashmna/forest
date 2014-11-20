@@ -17,12 +17,16 @@ Splay<T>::~Splay() {
 
 template<typename T>
 T  *Splay<T>::search(T value) {
-
+    Node *node = search_(root_, value);
+    if(node != NULL) {
+        splay_(node);
+    }
+    return node;
 };
 
 template<typename T>
 void Splay<T>::insert(T value) {
-
+    insert_(root_, value);
 };
 
 template<typename T>
@@ -58,6 +62,7 @@ Splay<T> *Splay<T>::operator-(const Splay<T> &tree) {
 
 
 //PROTECTED
+
 template<typename T>
 struct Splay<T>::Node {
     T data;
@@ -84,10 +89,11 @@ void Splay<T>::splay_(Node *node) {
             rotate_(node);
         } else {
             rotate_(node);
-            rotate_(node->parent);
+            rotate_(node);
         }
     }
 }
+
 template<typename T>
 void Splay<T>::rotate_(Node *node) {
     if(node == node->parent->left) {
@@ -106,13 +112,28 @@ void Splay<T>::rotate_(Node *node) {
 }
 
 template<typename T>
-T *Splay<T>::search_(Node *node, T &value) {
-    return NULL;
-};
+T* Splay<T>::search_(Node *node, T &value) const {
+    if (node == NULL)
+        return NULL;
+    if (node->data == value)
+        return &node->data;
+    if (node->data < value)
+        return search_(node->right, value);
+    else
+        return search_(node->left, value);
+}
 
 template<typename T>
-void Splay<T>::insert_(Node *&node, T &value) {
-
+void Splay<T>::insert_(Node *&node, T &value, Node *parent) {
+    if (node == NULL) {
+        node = new Node(value);
+        node->parent = parent;
+        splay_(node);
+    } else if (value < node->data) {
+        insert_(node->left, value, node);
+    } else {
+        insert_(node->right, value, node);
+    }
 };
 
 template<typename T>
