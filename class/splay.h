@@ -31,7 +31,7 @@ protected:
 
     T *search_(Node *node, T &value) const; // copy from bst tree
     void insert_(Node *&node, T &value, Node *parent = NULL);
-    bool remove_(Node *&node, T &value, Node *parent = NULL);
+    bool remove_(Node *&node, T &value);
 
     void pre_order_(Node *node, void (*f)(T &value)) const; // copy from bst tree
     void in_order_(Node *node, void (*f)(T &value)) const; // copy from bst tree
