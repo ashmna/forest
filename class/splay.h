@@ -37,7 +37,7 @@ protected:
     void in_order_(Node *node, void (*f)(T &value)) const; // copy from bst tree
     void post_order_(Node *node, void (*f)(T &value)) const; // copy from bst tree
 
-    void build_tree_from_sorted_array_(Node *&node, T array[], size_t start, size_t end);
+    void build_tree_from_sorted_array_(Node *&node, T array[], size_t start, size_t end, Node *parent = NULL);
     void merge_(Node *&node, Node *node_1, Node *node_2);
     void split_(Node *&node, Node *node_1, Node *node_2);
 
