@@ -7,7 +7,7 @@ Splay<T>::Splay() : root_(NULL) {};
 
 template<typename T>
 Splay<T>::Splay(T array[], size_t length) {
-
+    build_tree_from_sorted_array_(root_, array, 0, length-1);
 };
 
 template<typename T>
@@ -70,7 +70,7 @@ struct Splay<T>::Node {
     Node *right;
     Node *parent;
 
-    Node(T &value) : data(value), left(NULL), right(NULL), parent(NULL) {}
+    Node(T &value, Node* parent = NULL) : data(value), left(NULL), right(NULL), parent(parent) {}
 
     ~Node() {
         delete left;
@@ -126,8 +126,7 @@ T* Splay<T>::search_(Node *node, T &value) const {
 template<typename T>
 void Splay<T>::insert_(Node *&node, T &value, Node *parent) {
     if (node == NULL) {
-        node = new Node(value);
-        node->parent = parent;
+        node = new Node(value, parent);
         splay_(node);
     } else if (value < node->data) {
         insert_(node->left, value, node);
@@ -168,6 +167,18 @@ void Splay<T>::post_order_(Node* node, void(*f)(T &value)) const {
         f(node->data);
     }
 };
+
+template<typename T>
+void Splay<T>::build_tree_from_sorted_array_(Node *&node, T array[], size_t start, size_t end, Node *parent) {
+    size_t middle = start + (end - start)/2;
+    node = new Node(array[middle], parent);
+    if(middle > start) {
+        build_tree_from_sorted_array_(node->left, array, start, middle-1, node);
+    }
+    if(middle < end) {
+        build_tree_from_sorted_array_(node->right, array, middle+1, end, node);
+    }
+}
 
 template<typename T>
 void Splay<T>::merge_(Node *&node, Node *node_1, Node *node_2) {
