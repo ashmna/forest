@@ -136,8 +136,44 @@ void Splay<T>::insert_(Node *&node, T &value, Node *parent) {
 };
 
 template<typename T>
-bool Splay<T>::remove_(Node *&node, T &value, Node *parent) {
-    return false;
+bool Splay<T>::remove_(Node *&node, T &value) {
+    bool ret = false;
+    if(node != NULL) {
+        if(node->data == value) {
+            if (node->left != NULL && node->right != NULL) {
+                Node *sub_node = node->right;
+                while (sub_node->left != NULL) {
+                    sub_node = sub_node->left;
+                }
+                T tmp_value = node->data;
+                node->data = sub_node->data;
+                sub_node->data = tmp_value;
+                ret = remove_(node->right, value);
+            } else {
+                Node *new_node = node->left;
+                if (node->right != NULL) new_node = node->right;
+                if (node->parent != NULL) {
+                    if (node->parent->left == node)
+                        node->parent->left = new_node;
+                    else
+                        node->parent->right = new_node;
+                } else {
+                    root_ = new_node;
+                }
+                node->left = NULL;
+                node->right = NULL;
+                delete node;
+                ret = true;
+            }
+        } else {
+            if (node->data < value) {
+                ret = remove_(node->right, value);
+            } else {
+                ret = remove_(node->left, value);
+            }
+        }
+    }
+    return ret;
 };
 
 
